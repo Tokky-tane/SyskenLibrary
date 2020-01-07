@@ -42,7 +42,7 @@ app.post('/books', [
 
 function addObjectName(object, name) {
     var emit_object = {}
-    emit_object[name] = object 
+    emit_object[name] = object
     return emit_object
 }
 
