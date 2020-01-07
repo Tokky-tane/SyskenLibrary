@@ -17,6 +17,20 @@ app.get('/books', function (req, res, next) {
         })
 })
 
+app.post('/books', (req, res, next) => {
+    let new_book = req.body
+
+    db.Book.create({
+        title: new_book.title,
+        author: new_book.author,
+        isbn: new_book.isbn
+    }).then(() => {
+        res.send()
+    }).catch(err => {
+        next(err)
+    })
+})
+
 function addObjectName(object, name) {
     var emit_object = {}
     emit_object[name] = object
