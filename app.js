@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3001
 
+const { check, validationResult } = require('express-validator');
 const models = require('./models')
 
 app.use(express.json())
@@ -17,7 +18,15 @@ app.get('/books', function (req, res, next) {
         })
 })
 
-app.post('/books', (req, res, next) => {
+app.post('/books', [
+    check('title').exists({ checkNull: true }),
+    check('isbn').optional().isISBN()
+], (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors)
+    }
+
     let new_book = req.body
 
     models.Book.create({
@@ -33,7 +42,7 @@ app.post('/books', (req, res, next) => {
 
 function addObjectName(object, name) {
     var emit_object = {}
-    emit_object[name] = object
+    emit_object[name] = object 
     return emit_object
 }
 
