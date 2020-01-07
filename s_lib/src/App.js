@@ -1,26 +1,56 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    };
+  }
+
+  componentDidMount() {
+    return fetch('http://localhost:3001/books')
+      .then((res) => res.json())
+      .then((resJson) => {
+        this.setState({
+          loading: true,
+          data: resJson,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  sucprintmessage() {
+    return (
+      <div className="App-header">
+        <p>sucsess!</p>
+      </div>
+    );
+  }
+
+  badprintmessage() {
+    return (
+      <div className="App-header">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  render() {
+    if(this.state.loading) {
+      return(
+        this.sucprintmessage()
+      );
+    }
+    else {
+      return(
+        this.badprintmessage()
+      );
+    }
+  }
 }
 
 export default App;
