@@ -15,7 +15,6 @@ class App extends React.Component{
       .then((resJson) => {
         this.setState({
           loading: true,
-          data: resJson,
         });
       })
       .catch((error) => {
