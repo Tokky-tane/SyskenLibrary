@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3001
 
-const { check, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator')
 const models = require('./models')
 
 app.use(express.json())
