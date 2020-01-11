@@ -33,8 +33,9 @@ app.post('/books', [
         title: new_book.title,
         author: new_book.author,
         isbn: new_book.isbn
-    }).then(() => {
-        res.send()
+    }).then((new_book) => {
+        let new_book_path = req.protocol + '://' + req.get('host') + req.url + `/${new_book.id}`
+        res.location(new_book_path).status(201).end()
     }).catch(err => {
         next(err)
     })
