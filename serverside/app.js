@@ -3,7 +3,7 @@ const app = express()
 const port = 3001
 
 const { check, validationResult } = require('express-validator')
-const models = require('./models')
+const models = require('./database/models')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
