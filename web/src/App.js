@@ -5,7 +5,8 @@ class App extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      books: [],
     };
   }
 
@@ -15,25 +16,51 @@ class App extends React.Component{
       .then((resJson) => {
         this.setState({
           loading: true,
+          books: resJson.books,
         });
+        console.log();
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  sucprintmessage() {
+  printTable = () => {
+    const booktable = this.state.books.map((books) =>
+      <tr key="bookslist">
+        <td>
+          {books.title}
+        </td>
+        <td>
+          {books.author}
+        </td>
+        <td>
+          {books.isbn}
+        </td>
+      </tr>
+    );
+
     return (
-      <div className="App-header">
-        <p>sucsess!</p>
-      </div>
+      <table border="1" cellSpacing="0">
+        <thead>
+          <tr>
+            <th>タイトル</th>
+            <th>著者</th>
+            <th>isbnコード</th>
+          </tr>
+        </thead>
+        <tbody>
+          {booktable}
+        </tbody>
+      </table>
     );
   }
 
   badprintmessage() {
     return (
       <div className="App-header">
-        <p>Loading...</p>
+        <p>sorry...</p>
+        <p>loading now...</p>
       </div>
     );
   }
@@ -41,12 +68,16 @@ class App extends React.Component{
   render() {
     if(this.state.loading) {
       return(
-        this.sucprintmessage()
+        <div className="booksDetail">
+          <this.printTable />
+        </div>
       );
     }
     else {
       return(
-        this.badprintmessage()
+        <div className="cannotLoadJson">
+          <this.badprintmessage />
+        </div>
       );
     }
   }
