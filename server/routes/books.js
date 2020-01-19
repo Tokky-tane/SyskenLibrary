@@ -1,19 +1,18 @@
 const express = require('express')
-const app = express()
-const port = 3001
-
+const router = express.Router()
 const { check, validationResult } = require('express-validator')
-const models = require('./models')
+const models = require('../database/models')
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+router.use(express.json())
+router.use(express.urlencoded({ extended: true }))
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    next()
-})
+let addObjectName = function (object, name) {
+    var emit_object = {}
+    emit_object[name] = object
+    return emit_object
+}
 
-app.get('/books', function (req, res, next) {
+router.get('/', function (req, res, next) {
     models.Book.findAll({ attributes: ['title', 'author', 'isbn'] })
         .then(books => {
             res.json(addObjectName(books, 'books'))
@@ -23,7 +22,7 @@ app.get('/books', function (req, res, next) {
         })
 })
 
-app.post('/books', [
+router.post('/', [
     check('title').exists({ checkNull: true }),
     check('isbn').optional().isISBN()
 ], (req, res, next) => {
@@ -39,17 +38,13 @@ app.post('/books', [
         author: new_book.author,
         isbn: new_book.isbn
     }).then((new_book) => {
-        let new_book_path = req.protocol + '://' + req.get('host') + req.url + `/${new_book.id}`
-        res.location(new_book_path).status(201).end()
+        // 新しく生成された本を指すURLをLocationヘッダに設定する
+        let new_book_url = req.protocol + '://' + req.get('host') + req.url + `/${new_book.id}`
+        res.location(new_book_url).status(201).end()
+        
     }).catch(err => {
         next(err)
     })
 })
 
-function addObjectName(object, name) {
-    var emit_object = {}
-    emit_object[name] = object
-    return emit_object
-}
-
-app.listen(port, () => console.log(`Sysken Library App listening on port ${port}!`))
+module.exports = router
