@@ -1,4 +1,5 @@
 import React from 'react';
+import {HashRouter, Route, Switch, Link} from 'react-router-dom';
 import './App.css';
 
 class App extends React.Component{
@@ -18,7 +19,6 @@ class App extends React.Component{
           loading: true,
           books: resJson.books,
         });
-        console.log();
       })
       .catch((error) => {
         console.error(error);
@@ -41,7 +41,7 @@ class App extends React.Component{
     );
 
     return (
-      <table border="1" cellSpacing="0">
+      <table cellSpacing="0">
         <thead>
           <tr>
             <th>タイトル</th>
@@ -56,11 +56,27 @@ class App extends React.Component{
     );
   }
 
+  newbookregister() {
+    return (
+      <div className="bookregister">
+        <button className="registarbutton" >新しい本を登録</button>
+      </div>
+    );
+  }
+
   badprintmessage() {
     return (
-      <div className="App-header">
-        <p>sorry...</p>
-        <p>loading now...</p>
+      <div className="unable_toload">
+        <p>unable to load...</p>
+      </div>
+    );
+  }
+
+  render_detail = () => {
+    return (
+      <div className="bookdetail">
+        <this.printTable />
+        <this.newbookregister />
       </div>
     );
   }
@@ -68,9 +84,19 @@ class App extends React.Component{
   render() {
     if(this.state.loading) {
       return(
-        <div className="booksDetail">
-          <this.printTable />
-        </div>
+/*        <HashRouter>
+          <div>
+            <ul>
+              <li><Link to='/'>一覧</Link></li>
+              <li><Link to='/submit'>登録</Link></li>
+            </ul>
+            <Switch>
+              <Route exact path='/' Component={this.render_ditail} />
+              <Route path='/submit' Component={<p>//////////</p>} />
+            </Switch>
+          </div>
+        </HashRouter>*/
+        <this.render_detail />
       );
     }
     else {
