@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', [
   check('title').exists({checkNull: true}),
-  check('isbn').optional().isISBN(),
+  check('isbn').optional({nullable: true}).isISBN(),
 ], (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
