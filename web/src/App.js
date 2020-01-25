@@ -1,6 +1,7 @@
 import React from 'react';
 import {HashRouter, Route, Switch, Link} from 'react-router-dom';
 import './App.css';
+import Register from './Register.js';
 
 class App extends React.Component{
   constructor(props) {
@@ -113,16 +114,16 @@ class App extends React.Component{
                           isbn: (this.state.newbooks.isbn)
                         };
     const method = "POST";
+    const mode = "no-cors";
     const body = JSON.stringify(newbookdata);
     const headers = {
                       'Content-Type': 'application/json'
                     };
 
-    return fetch('http://localhost:3001/books', {method, headers, body})
-                    .then((res) => res.Json())
-                    .then((resjson) => {
-                    })
+    return fetch('http://localhost:3001/books', {method, headers, body, mode})
+                    .then((res) => res.json())
                     .catch((error) => {
+                      alert("本の登録に失敗しました...");
                       console.error()
                     });
   }
