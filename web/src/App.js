@@ -1,4 +1,5 @@
 import React from 'react';
+import {HashRouter, Route, Switch, Link} from 'react-router-dom';
 import './App.css';
 
 class App extends React.Component{
@@ -7,6 +8,11 @@ class App extends React.Component{
     this.state = {
       loading: false,
       books: [],
+      newbooks: {
+        title: '',
+        author: '',
+        isbn: '',
+      },
     };
   }
 
@@ -18,7 +24,6 @@ class App extends React.Component{
           loading: true,
           books: resJson.books,
         });
-        console.log();
       })
       .catch((error) => {
         console.error(error);
@@ -29,7 +34,9 @@ class App extends React.Component{
     const booktable = this.state.books.map((books) =>
       <tr key="bookslist">
         <td>
-          {books.title}
+          <a>
+            {books.title}
+          </a>
         </td>
         <td>
           {books.author}
@@ -41,7 +48,7 @@ class App extends React.Component{
     );
 
     return (
-      <table border="1" cellSpacing="0">
+      <table cellSpacing="0">
         <thead>
           <tr>
             <th>タイトル</th>
@@ -56,11 +63,91 @@ class App extends React.Component{
     );
   }
 
+  newbookregister() {
+    return (
+      <div className="bookregister">
+        <button className="registarbutton" >新しい本を登録</button>
+      </div>
+    );
+  }
+
+  submitbookform = () => {
+    return (
+      <div>
+          <form id="newbook">
+            <h3>タイトル</h3>
+            <input name="title" type="textbox" value={this.state.newtitle} onChange={event => this.submitnewbook(event)}></input>
+            <h3>著者</h3>
+            <input name="author" type="textbox" value={this.state.newauthor} onChange={event => this.submitnewbook(event)}></input>
+            <h3>isbnコード</h3>
+            <input name="isbn" type="textbox" value={this.state.newisbn} onChange={event => this.submitnewbook(event)}></input>
+            <br />
+            <button onClick={() => this.postnewbook()}>登録</button>
+        </form>
+      </div>
+    );
+  }
+
+  submitnewbook(event) {
+    var book = this.state.newbooks;
+
+    switch (event.target.name)
+    {
+      case 'title':
+        book.title = event.target.value;
+        break;
+      case 'author':
+        book.author = event.target.value;
+        break;
+      case 'isbn':
+        book.isbn = event.target.value;
+        break;
+    }
+
+    this.setState({newbooks: book});
+  }
+
+  postnewbook = () => {
+    const newbookdata = { title: (this.state.newbooks.title),
+                          author: (this.state.newbooks.author),
+                          isbn: (this.state.newbooks.isbn)
+                        };
+    const method = "POST";
+    const body = JSON.stringify(newbookdata);
+    const headers = {
+                      'Content-Type': 'application/json'
+                    };
+
+    return fetch('http://localhost:3001/books', {method, headers, body})
+                    .then((res) => res.Json())
+                    .then((resjson) => {
+                    })
+                    .catch((error) => {
+                      console.error()
+                    });
+  }
+
   badprintmessage() {
     return (
-      <div className="App-header">
-        <p>sorry...</p>
-        <p>loading now...</p>
+      <div className="unable_toload">
+        <p>unable to load...</p>
+      </div>
+    );
+  }
+
+  render_List = () => {
+    return (
+      <div className="bookList">
+        <this.printTable />
+        <this.newbookregister />
+      </div>
+    );
+  }
+
+  render_Submit = () => {
+    return (
+      <div className="booksubmit">
+        <this.submitbookform />
       </div>
     );
   }
@@ -68,9 +155,18 @@ class App extends React.Component{
   render() {
     if(this.state.loading) {
       return(
-        <div className="booksDetail">
-          <this.printTable />
-        </div>
+        <HashRouter>
+          <div>
+            <ul>
+              <li><Link to='/'>一覧</Link></li>
+              <li><Link to='/submit'>登録</Link></li>
+            </ul>
+            <Switch>
+              <Route exact path='/' component={this.render_List} />
+              <Route path='/submit' component={this.render_Submit} />
+            </Switch>
+          </div>
+        </HashRouter>
       );
     }
     else {
