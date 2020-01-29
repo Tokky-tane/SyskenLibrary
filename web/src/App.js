@@ -9,6 +9,7 @@ class App extends React.Component{
     this.state = {
       loading: false,
       books: [],
+      booknumber: 0,
       newbooks: {
         title: '',
         author: '',
@@ -33,7 +34,7 @@ class App extends React.Component{
 
   printTable = () => {
     const booktable = this.state.books.map((books) =>
-      <tr key="bookslist">
+      <tr key={"book:" + books.title}>
         <td>
           <a>
             {books.title}
@@ -111,19 +112,20 @@ class App extends React.Component{
   postnewbook = () => {
     const newbookdata = { title: (this.state.newbooks.title),
                           author: (this.state.newbooks.author),
-                          isbn: (this.state.newbooks.isbn)
+                          isbn: (this.state.newbooks.isbn) || null ,
                         };
     const method = "POST";
-    const mode = "no-cors";
+    const mode = "cors";
     const body = JSON.stringify(newbookdata);
     const headers = {
                       'Content-Type': 'application/json'
                     };
 
     return fetch('http://localhost:3001/books', {method, headers, body, mode})
-                    .then((res) => res.json())
+                    .then(() => {})
                     .catch((error) => {
-                      alert("本の登録に失敗しました...");
+                      alert("本の登録に失敗しました...\n" + error);
+                      console.log(error);
                       console.error()
                     });
   }
