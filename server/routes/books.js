@@ -13,7 +13,7 @@ const addObjectName = function(object, name) {
 };
 
 router.get('/', function(req, res, next) {
-  models.Book.findAll({attributes: ['title', 'author', 'isbn']})
+  models.Book.findAll({attributes: ['id', 'title', 'author', 'isbn']})
       .then((books) => {
         res.json(addObjectName(books, 'books'));
       })
