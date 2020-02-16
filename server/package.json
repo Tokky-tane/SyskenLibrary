@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/Tokky-tane/SyskenLibrary#readme",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "express": "^4.17.1",
+    "express-promise-router": "^3.0.3",
     "express-validator": "^6.3.1",
     "pg": "^7.17.0",
     "pg-hstore": "^2.3.3",
