@@ -1,8 +1,8 @@
-const express=require('express');
-const router=require('express-promise-router')();
+const express = require('express');
+const router = require('express-promise-router')();
 const {check, validationResult} = require('express-validator');
-const bcrypt=require('bcrypt');
-const user=require('../models').User;
+const bcrypt = require('bcrypt');
+const user = require('../models').User;
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
@@ -16,16 +16,16 @@ router.post('/', [
     return res.status(400).json(errors);
   }
 
-  const resevedUser=req.body;
-  const saltRounds=10;
+  const resevedUser = req.body;
+  const saltRounds = 10;
   bcrypt.hash(resevedUser.password, saltRounds)
-      .then((hash)=>user.findOrCreate({
+      .then((hash) => user.findOrCreate({
         where: {
           email: resevedUser.email,
         },
         defaults: {password: hash},
       }))
-      .then((createdUser, created)=>{
+      .then((createdUser, created) => {
         if (!created) {
           return res.status(409).end();
         }
