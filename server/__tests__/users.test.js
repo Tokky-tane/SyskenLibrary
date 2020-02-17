@@ -53,5 +53,10 @@ describe('test to /users', () => {
     const res = await request(app).get('/users');
     expect(res.statusCode).toBe(200);
   });
+
+  test('delete all user', async () => {
+    const res = await request(app).delete('/users');
+    expect(res.statusCode).toBe(204);
+  });
 });
 
