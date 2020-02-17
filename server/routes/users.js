@@ -7,6 +7,11 @@ const user = require('../models').User;
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
 
+router.get('/', (req, res) => {
+  user.findAll({attributes: ['email']})
+      .then((user) => res.send(user));
+});
+
 router.post('/', [
   check('email').isEmail(),
   check('password').isLength({min: 5, max: 30}),
