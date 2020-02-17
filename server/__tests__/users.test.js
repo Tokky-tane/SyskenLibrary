@@ -48,5 +48,10 @@ describe('test to /users', () => {
     const res = await request(app).post('/users').send(shortPasswordUser);
     expect(res.statusCode).toBe(400);
   });
+
+  test('get all user', async () => {
+    const res = await request(app).get('/users');
+    expect(res.statusCode).toBe(200);
+  });
 });
 
