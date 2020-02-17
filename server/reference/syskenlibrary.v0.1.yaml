@@ -22,10 +22,19 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Book-with-id'
-              examples: {}
+              examples:
+                example-1:
+                  value:
+                    books:
+                      - title: sample_book
+                        author: sample_author
+                        isbn: null
+                      - title: sample_book2
+                        author: sample_author
+                        isbn: '9783161484100'
       operationId: get-books
       description: すべての書籍のデータを返す
-      summary: 書籍データの全件取得
+      summary: get all books
     post:
       operationId: post-books
       responses:
@@ -37,10 +46,80 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Book'
-            examples: {}
+            examples:
+              example-1:
+                value:
+                  title: sample_book
+                  author: sample_author
+                  isbn: 9783161484100
         description: 登録する本のデータ
-      description: 新しく書籍を登録する
-      summary: 書籍の新規登録
+      description: 新しい書籍を登録する
+      summary: register new book
+  /users:
+    get:
+      summary: get all users
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: email
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+              examples:
+                example-1:
+                  value:
+                    - email: foo@bar.com
+                    - email: foo2@bar.com
+      operationId: get-users
+      description: すべてのユーザーを取得する
+      requestBody: {}
+    post:
+      summary: register new user
+      tags: []
+      operationId: post-users
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: ''
+      description: 新しいユーザーを登録する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            examples:
+              example-1:
+                value:
+                  email: foo@bar.com
+                  password: password
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              example:
+                value:
+                  email: foo@bar.com
+                  password: password
+    delete:
+      summary: delete all user
+      tags: []
+      operationId: delete-users
+      responses:
+        '204':
+          description: No Content
+      description: すべてのユーザーを削除する
 components:
   schemas:
     Book:
@@ -65,7 +144,20 @@ components:
           required:
             - id
         - $ref: '#/components/schemas/Book'
+    User:
+      title: User
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+          minLength: 5
+          maxLength: 30
+      required:
+        - email
+        - password
   securitySchemes: {}
 servers:
-  - url: 'http://locahost:3001'
+  - url: 'http://localhost:3001'
     description: ''
