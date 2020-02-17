@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: SyskenLibrary
-  version: '1.0'
+  version: '0.1'
   description: シス研の蔵書を管理するためのAPIです
   contact:
     name: TokihiroNakahara
