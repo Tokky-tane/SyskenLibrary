@@ -1,5 +1,8 @@
-const express = require('express');
-const app = express();
+const express=require('express');
+const app=express();
+const books=require('./routes/books');
+const users=require('./routes/users');
+
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -7,7 +10,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const books = require('./routes/books');
 app.use('/books', books);
+app.use('/users', users);
 
 module.exports = app;
