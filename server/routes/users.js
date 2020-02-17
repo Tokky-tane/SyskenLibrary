@@ -25,7 +25,7 @@ router.post('/', [
         },
         defaults: {password: hash},
       }))
-      .then((createdUser, created) => {
+      .then(([createdUser, created]) => {
         if (!created) {
           return res.status(409).end();
         }
