@@ -41,50 +41,6 @@ paths:
         description: 登録する本のデータ
       description: 新しく書籍を登録する
       summary: 書籍の新規登録
-  '/books/{id}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: 書籍データの1件取得
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book-with-id'
-        '404':
-          description: Not Found
-      operationId: get-books-id
-      description: 指定されたidを持つ書籍のデータを返す
-    delete:
-      summary: 書籍の削除
-      operationId: delete-books-id
-      responses:
-        '204':
-          description: No Content
-      description: 指定されたidを持つ書籍を削除
-    put:
-      summary: 書籍データの変更
-      operationId: put-books-id
-      responses:
-        '200':
-          description: OK
-        '404':
-          description: Not Found
-      description: 指定されたidを持つ書籍のデータを変更する
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Book'
-            examples: {}
-        description: 更新後のデータ
 components:
   schemas:
     Book:
