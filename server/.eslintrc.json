@@ -16,6 +16,7 @@
     },
     "rules": {
         "space-infix-ops": "error",
-        "arrow-spacing": "warn"
+        "arrow-spacing": "warn",
+        "require-jsdoc": "off"
     }
 }
