@@ -1,9 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const books = require('./routes/books');
 const users = require('./routes/users');
 const login = require('./routes/login');
-
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

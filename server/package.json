@@ -4,9 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "pretest": "sequelize db:seed:undo:all",
-    "test": "jest --runInBand",
-    "posttest": "sequelize db:seed:undo:all"
+    "test": "jest --runInBand"
   },
   "repository": {
     "type": "git",
@@ -20,6 +18,7 @@
   "homepage": "https://github.com/Tokky-tane/SyskenLibrary#readme",
   "dependencies": {
     "bcrypt": "^3.0.7",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-promise-router": "^3.0.3",
     "express-validator": "^6.3.1",
