@@ -4,9 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "pretest": "sequelize db:seed:undo:all",
-    "test": "jest",
-    "posttest": "sequelize db:seed:undo:all"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
