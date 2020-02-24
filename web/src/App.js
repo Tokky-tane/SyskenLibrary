@@ -1,5 +1,7 @@
 import React from 'react';
 import {HashRouter, Route, Switch, Link} from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {AppBar, MenuItem, Drawer} from 'material-ui';
 import './App.css';
 
 class App extends React.Component{
@@ -157,18 +159,21 @@ class App extends React.Component{
   render() {
     if(this.state.loading) {
       return(
-        <HashRouter>
-          <div>
-            <ul>
-              <li><Link to='/'>一覧</Link></li>
-              <li><Link to='/submit'>登録</Link></li>
-            </ul>
-            <Switch>
-              <Route exact path='/' component={this.render_List} />
-              <Route path='/submit' component={this.render_Submit} />
-            </Switch>
-          </div>
-        </HashRouter>
+        <MuiThemeProvider>
+          <HashRouter>
+            <div>
+              <AppBar title="Sysken Library" />
+              <ul>
+                <li><Link to='/'>一覧</Link></li>
+                <li><Link to='/submit'>登録</Link></li>
+              </ul>
+              <Switch>
+                <Route exact path='/' component={this.render_List} />
+                <Route path='/submit' component={this.render_Submit} />
+              </Switch>
+            </div>
+          </HashRouter>
+        </MuiThemeProvider>
       );
     }
     else {
