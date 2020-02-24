@@ -19,7 +19,7 @@ router.post('/', [
   const receivedUser = req.body;
   const dbUser = await user.findOne({where: {email: receivedUser.email}});
 
-  if (dbUser) {
+  if (!dbUser) {
     res.status(400).end();
     return;
   }
