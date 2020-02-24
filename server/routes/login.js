@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const {check, validationResult} = require('express-validator');
 const user = require('../models').User;
 const auth = require('../utils/auth');
+const addObjectName = require('../utils/object').addObjectName;
 
 router.use(express.json());
 
@@ -31,7 +32,7 @@ router.post('/', [
   }
 
   const token = auth.signToken(dbUser.id);
-  res.send(token);
+  res.send(addObjectName(token, 'token'));
 
   return;
 });
