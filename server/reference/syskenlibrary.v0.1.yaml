@@ -107,7 +107,7 @@ paths:
                 value:
                   email: foo@bar.com
                   password: password
-        description: ''
+        description: 登録するユーザーのデータ
     delete:
       summary: delete all user
       tags: []
