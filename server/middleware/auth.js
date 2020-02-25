@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   }
   const [type, token] = authorizationHeader.split(' ');
   if (type != 'Bearer') {
-    return res.status(400).end();
+    return res.status(401).end();
   }
 
   try {
