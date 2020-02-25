@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-class Auth {
+class Jwt {
   constructor() {
     this._secret = crypto.randomBytes(32);
     this._secretCreatedTime = Date.now();
@@ -29,4 +29,4 @@ class Auth {
   }
 };
 
-module.exports = new Auth();
+module.exports = new Jwt();

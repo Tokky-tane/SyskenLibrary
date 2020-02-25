@@ -1,4 +1,4 @@
-const auth = require('../utils/auth');
+const jwt = require('../utils/jwt');
 
 module.exports = (req, res, next) => {
   const authorizationHeader = req.get('Authorization');
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    const id = auth.verifyToken(token)['sub'];
+    const id = jwt.verifyToken(token)['sub'];
     req.body.user_id = id;
   } catch (error) {
     return res.status(401).end();
