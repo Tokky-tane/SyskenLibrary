@@ -107,15 +107,7 @@ paths:
                 value:
                   email: foo@bar.com
                   password: password
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-            examples:
-              example:
-                value:
-                  email: foo@bar.com
-                  password: password
+        description: ''
     delete:
       summary: delete all user
       tags: []
