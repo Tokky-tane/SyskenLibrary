@@ -35,6 +35,7 @@ paths:
       operationId: get-books
       description: すべての書籍のデータを返す
       summary: get all books
+      parameters: []
     post:
       operationId: post-books
       responses:
@@ -55,6 +56,9 @@ paths:
         description: 登録する本のデータ
       description: 新しい書籍を登録する
       summary: register new book
+      security:
+        - bearerAuth: []
+      parameters: []
   /users:
     get:
       summary: get all users
@@ -187,7 +191,11 @@ components:
       required:
         - email
         - password
-  securitySchemes: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 servers:
   - url: 'http://localhost:3001'
     description: ''
