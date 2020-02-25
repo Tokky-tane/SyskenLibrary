@@ -2,15 +2,10 @@ const express = require('express');
 const router = new express.Router();
 const {check, validationResult} = require('express-validator');
 const models = require('../models');
+const addObjectName = require('../utils/object').addObjectName;
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
-
-const addObjectName = function(object, name) {
-  const emitObject = {};
-  emitObject[name] = object;
-  return emitObject;
-};
 
 router.get('/', function(req, res, next) {
   models.Book.findAll({attributes: ['id', 'title', 'author', 'isbn']})

@@ -120,6 +120,36 @@ paths:
         '204':
           description: No Content
       description: すべてのユーザーを削除する
+  /login:
+    post:
+      summary: login
+      operationId: post-login
+      description: emailとpasswordでログインする
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                description: ''
+                properties:
+                  token:
+                    type: string
+              examples:
+                example-1:
+                  value:
+                    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTeXNrZW5MaWJyYXkiLCJzdWIiOjI2MSwiaWF0IjoxNTgyNTE4MTc0LCJleHAiOjE1ODI1Mjg5NzR9.g5g66qUO4hJBnTbUuMxSOXRWBPLkrkCrHpKYA413j8A
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+            examples:
+              example-1:
+                value:
+                  email: foo@bar.com
+                  password: password
 components:
   schemas:
     Book:
