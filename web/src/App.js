@@ -3,6 +3,7 @@ import {HashRouter, Route, Switch, Link} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {AppBar, MenuItem, Drawer} from 'material-ui';
 import './App.css';
+import List from './components/List.js';
 
 class App extends React.Component{
   constructor(props) {
@@ -17,6 +18,7 @@ class App extends React.Component{
         isbn: '',
       },
     };
+    
   }
 
   componentDidMount() {
@@ -31,45 +33,12 @@ class App extends React.Component{
       .catch((error) => {
         console.error(error);
       });
-  }
-
-  printTable = () => {
-    const booktable = this.state.books.map((books) =>
-      <tr key={"book:" + books.title}>
-        <td>
-          <a>
-            {books.title}
-          </a>
-        </td>
-        <td>
-          {books.author}
-        </td>
-        <td>
-          {books.isbn}
-        </td>
-      </tr>
-    );
-
-    return (
-      <table cellSpacing="0">
-        <thead>
-          <tr>
-            <th>タイトル</th>
-            <th>著者</th>
-            <th>isbnコード</th>
-          </tr>
-        </thead>
-        <tbody>
-          {booktable}
-        </tbody>
-      </table>
-    );
-  }
+  }  
 
   newbookregister() {
     return (
       <div className="bookregister">
-        <button className="registarbutton" >新しい本を登録</button>
+        <button className="registarbutton">新しい本を登録</button>
       </div>
     );
   }
@@ -104,6 +73,8 @@ class App extends React.Component{
         break;
       case 'isbn':
         book.isbn = event.target.value;
+        break;
+      default :
         break;
     }
 
@@ -142,7 +113,7 @@ class App extends React.Component{
   render_List = () => {
     return (
       <div className="bookList">
-        <this.printTable />
+        <List books={this.state.books} />
         <this.newbookregister />
       </div>
     );
