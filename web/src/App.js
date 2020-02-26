@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {AppBar, MenuItem, Drawer} from 'material-ui';
 import './App.css';
 import List from './components/List.js';
+import Register from './components/Register.js';
 
 class App extends React.Component{
   constructor(props) {
@@ -12,11 +13,6 @@ class App extends React.Component{
       loading: false,
       books: [],
       booknumber: 0,
-      newbooks: {
-        title: '',
-        author: '',
-        isbn: '',
-      },
     };
     
   }
@@ -43,65 +39,6 @@ class App extends React.Component{
     );
   }
 
-  submitbookform = () => {
-    return (
-      <div>
-          <form id="newbook">
-            <h3>タイトル</h3>
-            <input name="title" type="textbox" value={this.state.newtitle} onChange={event => this.submitnewbook(event)}></input>
-            <h3>著者</h3>
-            <input name="author" type="textbox" value={this.state.newauthor} onChange={event => this.submitnewbook(event)}></input>
-            <h3>isbnコード</h3>
-            <input name="isbn" type="textbox" value={this.state.newisbn} onChange={event => this.submitnewbook(event)}></input>
-            <br />
-            <button onClick={() => this.postnewbook()}>登録</button>
-        </form>
-      </div>
-    );
-  }
-
-  submitnewbook(event) {
-    var book = this.state.newbooks;
-
-    switch (event.target.name)
-    {
-      case 'title':
-        book.title = event.target.value;
-        break;
-      case 'author':
-        book.author = event.target.value;
-        break;
-      case 'isbn':
-        book.isbn = event.target.value;
-        break;
-      default :
-        break;
-    }
-
-    this.setState({newbooks: book});
-  }
-
-  postnewbook = () => {
-    const newbookdata = { title: (this.state.newbooks.title),
-                          author: (this.state.newbooks.author),
-                          isbn: (this.state.newbooks.isbn) || null ,
-                        };
-    const method = "POST";
-    const mode = "cors";
-    const body = JSON.stringify(newbookdata);
-    const headers = {
-                      'Content-Type': 'application/json'
-                    };
-
-    return fetch('http://localhost:3001/books', {method, headers, body, mode})
-                    .then(() => {})
-                    .catch((error) => {
-                      alert("本の登録に失敗しました...\n" + error);
-                      console.log(error);
-                      console.error()
-                    });
-  }
-
   badprintmessage() {
     return (
       <div className="unable_toload">
@@ -122,7 +59,7 @@ class App extends React.Component{
   render_Submit = () => {
     return (
       <div className="booksubmit">
-        <this.submitbookform />
+        <Register />
       </div>
     );
   }
