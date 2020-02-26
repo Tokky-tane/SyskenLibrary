@@ -3,7 +3,7 @@ const router = require('express-promise-router')();
 const bcrypt = require('bcrypt');
 const {check, validationResult} = require('express-validator');
 const user = require('../models').User;
-const auth = require('../utils/auth');
+const jwt = require('../utils/jwt');
 const addObjectName = require('../utils/object').addObjectName;
 
 router.use(express.json());
@@ -31,7 +31,7 @@ router.post('/', [
     return;
   }
 
-  const token = auth.signToken(dbUser.id);
+  const token = jwt.signToken(dbUser.id);
   res.send(addObjectName(token, 'token'));
 
   return;

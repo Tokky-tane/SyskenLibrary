@@ -1,8 +1,10 @@
 const express = require('express');
 const router = new express.Router();
-const {check, validationResult} = require('express-validator');
+const {check} = require('express-validator');
 const models = require('../models');
 const addObjectName = require('../utils/object').addObjectName;
+const auth = require('../middleware/auth');
+const validation = require('../middleware/validation');
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
@@ -20,12 +22,7 @@ router.get('/', function(req, res, next) {
 router.post('/', [
   check('title').exists({checkNull: true}),
   check('isbn').optional({nullable: true}).isISBN(),
-], (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors);
-  }
-
+], validation, auth, (req, res, next) => {
   const newBook = req.body;
 
   models.Book.create({
