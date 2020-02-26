@@ -1,7 +1,7 @@
 import React from 'react';
 import {HashRouter, Route, Switch, Link} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {AppBar, MenuItem, Drawer} from 'material-ui';
+import {AppBar} from 'material-ui';
 import './App.css';
 import List from './components/List.js';
 import Register from './components/Register.js';
@@ -12,9 +12,7 @@ class App extends React.Component{
     this.state = {
       loading: false,
       books: [],
-      booknumber: 0,
     };
-    
   }
 
   componentDidMount() {

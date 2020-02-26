@@ -1,15 +1,11 @@
 import React from 'react';
 
 class List extends React.Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         const listtable = this.props.books.map((books) =>
-                <tr key={"book:" + books.title}>
+                <tr key={books.title}>
                     <td>
-                        <a>
+                        <a href={"/#/"}>
                             {books.title}
                         </a>
                     </td>
