@@ -1,10 +1,10 @@
 const request = require('supertest');
-const dbUtils = require('../utils/database');
+const users = require('../utils/users');
 const app = require('../app');
 
 describe('test to /users', () => {
   beforeEach(() => {
-    return dbUtils.deleteAllUsers();
+    return users.deleteAll();
   });
 
   test('post user', async () => {

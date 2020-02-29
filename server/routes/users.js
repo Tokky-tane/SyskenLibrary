@@ -3,7 +3,7 @@ const router = require('express-promise-router')();
 const {check} = require('express-validator');
 const user = require('../models').User;
 const varidate = require('../middleware/validation');
-const db = require('../utils/database');
+const users = require('../utils/users');
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
@@ -19,7 +19,7 @@ router.post('/', [
 ], varidate, async (req, res, next) => {
   const resevedUser = req.body;
 
-  const createdUser = await db.createUser(
+  const createdUser = await users.create(
       resevedUser.email,
       resevedUser.password);
 
@@ -34,7 +34,7 @@ router.post('/', [
 });
 
 router.delete('/', async (req, res) => {
-  db.deleteAllUsers();
+  users.deleteAll();
   return res.status(204).end();
 });
 

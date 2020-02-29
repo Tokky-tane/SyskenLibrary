@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
-const dbUtil = require('../utils/database');
+const users = require(`../utils/users`);
 const login = require('../utils/login');
 
 describe('test to /books', () => {
@@ -8,8 +8,8 @@ describe('test to /books', () => {
   const password = 'password';
   let token;
   beforeAll(async () => {
-    dbUtil.deleteAllUsers();
-    await dbUtil.createUser(email, password);
+    users.deleteAll();
+    await users.create(email, password);
   });
 
   beforeEach(async () => {

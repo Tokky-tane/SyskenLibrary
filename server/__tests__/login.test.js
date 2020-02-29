@@ -1,13 +1,13 @@
 const request = require('supertest');
-const dbUtils = require('../utils/database');
+const users = require('../utils/users');
 const app = require('../app');
 
 describe('test login', () => {
   const email = 'foo@bar.com';
   const password = 'foobar';
   beforeAll(async () => {
-    dbUtils.deleteAllUsers();
-    await dbUtils.createUser(email, password);
+    users.deleteAll();
+    await users.create(email, password);
   });
 
   test('sign', async () => {

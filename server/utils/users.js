@@ -1,11 +1,11 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 
-exports.deleteAllUsers = () => {
+exports.deleteAll = () => {
   models.User.destroy({where: {}, truncate: true});
 };
 
-exports.createUser = async (email, password) => {
+exports.create = async (email, password) => {
   const sameEmailUser = await models.User.findOne({where: {email: email}});
 
   // !sameEmailUserでは動かない なぜだろう？
