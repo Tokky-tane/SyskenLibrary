@@ -10,7 +10,7 @@ exports.createUser = async (email, password) => {
 
   // !sameEmailUserでは動かない なぜだろう？
   if (sameEmailUser !== null) {
-    throw Error('Same email user exsists');
+    return null;
   }
 
   const saltRounds = 10;
