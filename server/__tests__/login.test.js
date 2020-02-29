@@ -22,7 +22,7 @@ describe('test login', () => {
     const res = await request(app)
         .post('/login')
         .send({email: notExistEmail, password: password});
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(401);
   });
 
   test('wrong pass word login', async () => {
@@ -30,6 +30,6 @@ describe('test login', () => {
     const res = await request(app)
         .post('/login')
         .send({email: email, password: wrongPassword});
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(401);
   });
 });
