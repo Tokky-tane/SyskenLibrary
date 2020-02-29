@@ -4,7 +4,7 @@ const app = require('../app');
 
 describe('test to /users', () => {
   beforeEach(() => {
-    return dbUtils.clearUserDatabase();
+    return dbUtils.deleteAllUsers();
   });
 
   test('post user', async () => {

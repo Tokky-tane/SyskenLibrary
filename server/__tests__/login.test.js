@@ -6,7 +6,7 @@ describe('test login', () => {
   const email = 'foo@bar.com';
   const password = 'foobar';
   beforeAll(async () => {
-    await dbUtils.clearUserDatabase();
+    await dbUtils.deleteAllUsers();
     await dbUtils.createUser(email, password);
   });
 

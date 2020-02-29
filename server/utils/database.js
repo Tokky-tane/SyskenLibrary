@@ -1,7 +1,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 
-exports.clearUserDatabase = () => {
+exports.deleteAllUsers = () => {
   models.User.destroy({where: {}, truncate: true});
 };
 

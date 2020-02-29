@@ -34,10 +34,8 @@ router.post('/', [
 });
 
 router.delete('/', async (req, res) => {
-  user.destroy({where: {}, truncate: true})
-      .then(() =>
-        res.status(204).end(),
-      );
+  db.deleteAllUsers();
+  return res.status(204).end();
 });
 
 module.exports = router;

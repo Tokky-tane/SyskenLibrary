@@ -8,7 +8,7 @@ describe('test to /books', () => {
   const password = 'password';
   let token;
   beforeAll(async () => {
-    await dbUtil.clearUserDatabase();
+    await dbUtil.deleteAllUsers();
     await dbUtil.createUser(email, password);
   });
 
