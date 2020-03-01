@@ -5,6 +5,7 @@ import {AppBar} from 'material-ui';
 import './App.css';
 import List from './components/List.js';
 import Register from './components/Register.js';
+import Detail from './components/Detail.js';
 
 class App extends React.Component{
   constructor(props) {
@@ -29,14 +30,6 @@ class App extends React.Component{
       });
   }  
 
-  newbookregister() {
-    return (
-      <div className="bookregister">
-        <button className="registarbutton">新しい本を登録</button>
-      </div>
-    );
-  }
-
   badprintmessage() {
     return (
       <div className="unable_toload">
@@ -49,7 +42,6 @@ class App extends React.Component{
     return (
       <div className="bookList">
         <List books={this.state.books} />
-        <this.newbookregister />
       </div>
     );
   }
@@ -58,6 +50,14 @@ class App extends React.Component{
     return (
       <div className="booksubmit">
         <Register />
+      </div>
+    );
+  }
+
+  render_Detail = () => {
+    return (
+      <div className="bookdetail">
+        <Detail books={this.state.books}/>
       </div>
     );
   }
@@ -76,6 +76,7 @@ class App extends React.Component{
               <Switch>
                 <Route exact path='/' component={this.render_List} />
                 <Route path='/submit' component={this.render_Submit} />
+                <Route path='/detail' component={this.render_Detail} />
               </Switch>
             </div>
           </HashRouter>

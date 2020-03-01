@@ -5,7 +5,7 @@ class List extends React.Component {
         const listtable = this.props.books.map((books) =>
                 <tr key={books.title}>
                     <td>
-                        <a href={"/#/"}>
+                        <a href={"/#/detail?bt=" + books.title}>
                             {books.title}
                         </a>
                     </td>
@@ -19,19 +19,24 @@ class List extends React.Component {
         );
 
         return (
-            <table cellSpacing="0">
-                <thead>
-                    <tr>
-                        <th>タイトル</th>
-                        <th>著者</th>
-                        <th>isbnコード</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {listtable}
-                </tbody>
-            </table>
-        )
+            <div>
+                <table cellSpacing="0">
+                    <thead>
+                        <tr>
+                            <th>タイトル</th>
+                            <th>著者</th>
+                            <th>isbnコード</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {listtable}
+                    </tbody>
+                </table>
+                <div>
+                    <button className="registarbutton">新しい本を登録</button>
+                </div>
+            </div>
+        );
     };
 }
 
