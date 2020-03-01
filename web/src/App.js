@@ -3,6 +3,7 @@ import {HashRouter, Route, Switch, Link} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {AppBar} from 'material-ui';
 import './App.css';
+import Home from './components/Home.js';
 import List from './components/List.js';
 import Register from './components/Register.js';
 import Detail from './components/Detail.js';
@@ -34,6 +35,14 @@ class App extends React.Component{
     return (
       <div className="unable_toload">
         <p>unable to load...</p>
+      </div>
+    );
+  }
+
+  render_Home = () => {
+    return(
+      <div className="siteHome">
+        <Home />
       </div>
     );
   }
@@ -70,11 +79,12 @@ class App extends React.Component{
             <div>
               <AppBar title="Sysken Library" />
               <ul>
-                <li><Link to='/'>一覧</Link></li>
+                <li><Link to='/List'>一覧</Link></li>
                 <li><Link to='/submit'>登録</Link></li>
               </ul>
               <Switch>
-                <Route exact path='/' component={this.render_List} />
+                <Route exact path='/' component={this.render_Home} />
+                <Route path='/List' component={this.render_List} />
                 <Route path='/submit' component={this.render_Submit} />
                 <Route path='/detail' component={this.render_Detail} />
               </Switch>

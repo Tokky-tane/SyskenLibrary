@@ -23,6 +23,10 @@ class Detail extends React.Component {
                 <h2>{detailBt[1] + " の詳細"}</h2>
                 <h3>{"著者..." + detailbookstate[0].author}</h3>
                 <h3>{"ISBNコード..." + detailbookstate[0].isbn}</h3>
+                <div>
+                    <button>この本を借りる</button>
+                    <button onClick={()=>{window.location.href = '/#/List/'}}>戻る</button>
+                </div>
             </>
         );
     };
