@@ -1,7 +1,10 @@
 import React from 'react';
 import {HashRouter, Route, Switch, Link} from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {AppBar} from 'material-ui';
 import './App.css';
-import Register from './Register.js';
+import List from './components/List.js';
+import Register from './components/Register.js';
 
 class App extends React.Component{
   constructor(props) {
@@ -9,12 +12,6 @@ class App extends React.Component{
     this.state = {
       loading: false,
       books: [],
-      booknumber: 0,
-      newbooks: {
-        title: '',
-        author: '',
-        isbn: '',
-      },
     };
   }
 
@@ -30,104 +27,14 @@ class App extends React.Component{
       .catch((error) => {
         console.error(error);
       });
-  }
-
-  printTable = () => {
-    const booktable = this.state.books.map((books) =>
-      <tr key={"book:" + books.title}>
-        <td>
-          <a>
-            {books.title}
-          </a>
-        </td>
-        <td>
-          {books.author}
-        </td>
-        <td>
-          {books.isbn}
-        </td>
-      </tr>
-    );
-
-    return (
-      <table cellSpacing="0">
-        <thead>
-          <tr>
-            <th>タイトル</th>
-            <th>著者</th>
-            <th>isbnコード</th>
-          </tr>
-        </thead>
-        <tbody>
-          {booktable}
-        </tbody>
-      </table>
-    );
-  }
+  }  
 
   newbookregister() {
     return (
       <div className="bookregister">
-        <button className="registarbutton" >新しい本を登録</button>
+        <button className="registarbutton">新しい本を登録</button>
       </div>
     );
-  }
-
-  submitbookform = () => {
-    return (
-      <div>
-          <form id="newbook">
-            <h3>タイトル</h3>
-            <input name="title" type="textbox" value={this.state.newtitle} onChange={event => this.submitnewbook(event)}></input>
-            <h3>著者</h3>
-            <input name="author" type="textbox" value={this.state.newauthor} onChange={event => this.submitnewbook(event)}></input>
-            <h3>isbnコード</h3>
-            <input name="isbn" type="textbox" value={this.state.newisbn} onChange={event => this.submitnewbook(event)}></input>
-            <br />
-            <button onClick={() => this.postnewbook()}>登録</button>
-        </form>
-      </div>
-    );
-  }
-
-  submitnewbook(event) {
-    var book = this.state.newbooks;
-
-    switch (event.target.name)
-    {
-      case 'title':
-        book.title = event.target.value;
-        break;
-      case 'author':
-        book.author = event.target.value;
-        break;
-      case 'isbn':
-        book.isbn = event.target.value;
-        break;
-    }
-
-    this.setState({newbooks: book});
-  }
-
-  postnewbook = () => {
-    const newbookdata = { title: (this.state.newbooks.title),
-                          author: (this.state.newbooks.author),
-                          isbn: (this.state.newbooks.isbn) || null ,
-                        };
-    const method = "POST";
-    const mode = "cors";
-    const body = JSON.stringify(newbookdata);
-    const headers = {
-                      'Content-Type': 'application/json'
-                    };
-
-    return fetch('http://localhost:3001/books', {method, headers, body, mode})
-                    .then(() => {})
-                    .catch((error) => {
-                      alert("本の登録に失敗しました...\n" + error);
-                      console.log(error);
-                      console.error()
-                    });
   }
 
   badprintmessage() {
@@ -141,7 +48,7 @@ class App extends React.Component{
   render_List = () => {
     return (
       <div className="bookList">
-        <this.printTable />
+        <List books={this.state.books} />
         <this.newbookregister />
       </div>
     );
@@ -150,7 +57,7 @@ class App extends React.Component{
   render_Submit = () => {
     return (
       <div className="booksubmit">
-        <this.submitbookform />
+        <Register />
       </div>
     );
   }
@@ -158,18 +65,21 @@ class App extends React.Component{
   render() {
     if(this.state.loading) {
       return(
-        <HashRouter>
-          <div>
-            <ul>
-              <li><Link to='/'>一覧</Link></li>
-              <li><Link to='/submit'>登録</Link></li>
-            </ul>
-            <Switch>
-              <Route exact path='/' component={this.render_List} />
-              <Route path='/submit' component={this.render_Submit} />
-            </Switch>
-          </div>
-        </HashRouter>
+        <MuiThemeProvider>
+          <HashRouter>
+            <div>
+              <AppBar title="Sysken Library" />
+              <ul>
+                <li><Link to='/'>一覧</Link></li>
+                <li><Link to='/submit'>登録</Link></li>
+              </ul>
+              <Switch>
+                <Route exact path='/' component={this.render_List} />
+                <Route path='/submit' component={this.render_Submit} />
+              </Switch>
+            </div>
+          </HashRouter>
+        </MuiThemeProvider>
       );
     }
     else {
