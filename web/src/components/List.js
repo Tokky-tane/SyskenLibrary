@@ -33,7 +33,7 @@ class List extends React.Component {
                     </tbody>
                 </table>
                 <div>
-                    <button className="registarbutton">新しい本を登録</button>
+                    <button className="registarbutton" onClick={()=>{window.location.href = '/#/submit'}}>新しい本を登録</button>
                 </div>
             </div>
         );
