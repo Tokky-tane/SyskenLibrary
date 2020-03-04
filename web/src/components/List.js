@@ -1,4 +1,5 @@
 import React from 'react';
+import './List.css';
 
 class List extends React.Component {
     render() {
@@ -32,7 +33,7 @@ class List extends React.Component {
                         {listtable}
                     </tbody>
                 </table>
-                <div>
+                <div className="regibutton">
                     <button className="registarbutton" onClick={()=>{window.location.href = '/#/submit'}}>新しい本を登録</button>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Register.css';
 
 class Register extends React.Component {
     constructor(props) {
@@ -17,16 +18,18 @@ class Register extends React.Component {
 
     submitbookform() {
         return (
-          <div>
+          <div className="newbookform">
               <form id="newbook">
                 <h3>タイトル</h3>
-                <input name="title" type="textbox" value={this.state.newbooks.title} onChange={event => this.submitnewbook(event)}></input>
+                <input className="inputstring" name="title" type="textbox" value={this.state.newbooks.title} onChange={event => this.submitnewbook(event)}></input>
                 <h3>著者</h3>
-                <input name="author" type="textbox" value={this.state.newbooks.author} onChange={event => this.submitnewbook(event)}></input>
+                <input className="inputstring" name="author" type="textbox" value={this.state.newbooks.author} onChange={event => this.submitnewbook(event)}></input>
                 <h3>isbnコード</h3>
-                <input name="isbn" type="textbox" value={this.state.newbooks.isbn} onChange={event => this.submitnewbook(event)}></input>
+                <input className="inputnumber" name="isbn" type="textbox" value={this.state.newbooks.isbn} onChange={event => this.submitnewbook(event)}></input>
                 <br />
-                <button onClick={() => this.postnewbook()}>登録</button>
+                <div className="postbutton">
+                <button className="postbutton" onClick={() => this.postnewbook()}>登録</button>
+                </div>
             </form>
           </div>
         );
