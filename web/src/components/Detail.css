@@ -1,0 +1,13 @@
+div.printDetail {
+    text-align: center;
+}
+
+div.controlButtons {
+    text-align: center;
+    padding: 5vh 9.5vh;
+    margin: auto;
+}
+
+button.jumptoBorrow {
+    margin-right: 25px;
+}

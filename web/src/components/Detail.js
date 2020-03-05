@@ -1,4 +1,5 @@
 import React from 'react';
+import './Detail.css';
 
 class Detail extends React.Component {
     render() {
@@ -20,12 +21,15 @@ class Detail extends React.Component {
 
         return (
             <>
-                <h2>{detailBt[1] + " の詳細"}</h2>
-                <h3>{"著者..." + detailbookstate[0].author}</h3>
-                <h3>{"ISBNコード..." + detailbookstate[0].isbn}</h3>
-                <div>
-                    <button>この本を借りる</button>
-                    <button onClick={()=>{window.location.href = '/#/List/'}}>戻る</button>
+                <div className="printDetail">
+                    <h2>{detailBt[1] + " の詳細"}</h2>
+                    <h3>{"著者..." + detailbookstate[0].author}</h3>
+                    <h3>{"ISBNコード..." + detailbookstate[0].isbn}</h3>
+                </div>
+
+                <div className="controlButtons">
+                    <button className="jumptoBorrow">この本を借りる</button>
+                    <button classNAme="backtoList" onClick={()=>{window.location.href = '/#/List/'}}>一覧に戻る</button>
                 </div>
             </>
         );

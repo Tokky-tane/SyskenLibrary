@@ -1,14 +1,16 @@
 import React from 'react';
+import './Home.css';
 
 class Home extends React.Component {
     render() {
         return(
             <>
                 <h1>Welcome to "Sysken Library" !!</h1>
-                <button>sign up</button>
-                <button>sign in</button>
-
-                <button onClick={()=>{window.location.href = '/#/List'}}>junp to List</button>
+                <div className="jumpButtons">
+                    <button className="jumptoSignup">sign up</button>
+                    <button className="jumptoSignin">sign in</button>
+                    <button className="jumptoList" onClick={()=>{window.location.href = '/#/List'}}>junp to List</button>
+                </div>
             </>
         );
     }
