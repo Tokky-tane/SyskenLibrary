@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter, Route, Switch, Link} from 'react-router-dom';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {AppBar} from 'material-ui';
 import './App.css';
@@ -78,10 +78,6 @@ class App extends React.Component{
           <HashRouter>
             <div>
               <AppBar title="Sysken Library" />
-              <ul>
-                <li><Link to='/List'>一覧</Link></li>
-                <li><Link to='/submit'>登録</Link></li>
-              </ul>
               <Switch>
                 <Route exact path='/' component={this.render_Home} />
                 <Route path='/List' component={this.render_List} />
