@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {AppBar} from 'material-ui';
 import './App.css';
 import Home from './components/Home.js';
+import Login from './components/Signin.js';
 import List from './components/List.js';
 import Register from './components/Register.js';
 import Detail from './components/Detail.js';
@@ -47,6 +48,14 @@ class App extends React.Component{
     );
   }
 
+  render_Login = () => {
+    return(
+      <div className="Loginform">
+        <Login />
+      </div>
+    );
+  }
+
   render_List = () => {
     return (
       <div className="bookList">
@@ -80,6 +89,7 @@ class App extends React.Component{
               <AppBar title="Sysken Library" />
               <Switch>
                 <Route exact path='/' component={this.render_Home} />
+                <Route path='/Login' component={this.render_Login} />
                 <Route path='/List' component={this.render_List} />
                 <Route path='/submit' component={this.render_Submit} />
                 <Route path='/detail' component={this.render_Detail} />

@@ -65,11 +65,14 @@ class Register extends React.Component {
         const mode = "cors";
         const body = JSON.stringify(newbookdata);
         const headers = {
-                          'Content-Type': 'application/json'
+                          'Content-Type': 'application/json',
+                          'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTeXNrZW5MaWJyYXkiLCJzdWIiOjIsImlhdCI6MTU4MzU1MjU2OSwiZXhwIjoxNTgzNTYzMzY5fQ.kbZVaBbEdG2_PxYOSLdLg-u4mgnM5slOCGTii5e7sL8'
                         };
     
         return fetch('http://localhost:3001/books', {method, headers, body, mode})
-                        .then(() => {})
+                        .then(() => {
+                          window.location.href('/#/submit');
+                        })
                         .catch((error) => {
                           alert("本の登録に失敗しました...\n" + error);
                           console.log(error);
