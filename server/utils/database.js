@@ -2,7 +2,7 @@ const models = require('../models');
 const bcrypt = require('bcrypt');
 
 exports.clearUserDatabase = () => {
-  models.User.destroy({where: {}, truncate: true});
+  models.User.destroy({where: {}});
 };
 
 exports.createUser = async (email, password) => {

@@ -43,7 +43,7 @@ router.post('/', [
 });
 
 router.delete('/', async (req, res) => {
-  user.destroy({where: {}, truncate: true})
+  user.destroy({where: {}})
       .then(() =>
         res.status(204).end(),
       );
