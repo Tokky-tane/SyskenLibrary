@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     Loan.belongsTo(models.Book, {
       foreignKey: 'bookId',
     });
+    Loan.belongsTo(models.User, {
+      foreignKey: 'userId',
+    });
   };
   return Loan;
 };
