@@ -1,13 +1,13 @@
 const request = require('supertest');
-const dbUtils = require('../utils/database');
+const users = require('../utils/users');
 const app = require('../app');
 
 describe('test login', () => {
   const email = 'foo@bar.com';
   const password = 'foobar';
   beforeAll(async () => {
-    await dbUtils.clearUserDatabase();
-    await dbUtils.createUser(email, password);
+    users.deleteAll();
+    await users.create(email, password);
   });
 
   test('sign', async () => {
@@ -22,7 +22,7 @@ describe('test login', () => {
     const res = await request(app)
         .post('/login')
         .send({email: notExistEmail, password: password});
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(401);
   });
 
   test('wrong pass word login', async () => {
@@ -30,6 +30,6 @@ describe('test login', () => {
     const res = await request(app)
         .post('/login')
         .send({email: email, password: wrongPassword});
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(401);
   });
 });
