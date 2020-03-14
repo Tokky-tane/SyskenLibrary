@@ -1,16 +1,16 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 
-exports.clearUserDatabase = () => {
+exports.deleteAll = () => {
   models.User.destroy({where: {}, truncate: true});
 };
 
-exports.createUser = async (email, password) => {
+exports.create = async (email, password) => {
   const sameEmailUser = await models.User.findOne({where: {email: email}});
 
   // !sameEmailUserでは動かない なぜだろう？
   if (sameEmailUser !== null) {
-    throw Error('Same email user exsists');
+    return null;
   }
 
   const saltRounds = 10;
