@@ -74,7 +74,7 @@ class App extends React.Component{
   render_Submit = () => {
     return (
       <div className="booksubmit">
-        <Register />
+        <Register token={this.state.token}/>
       </div>
     );
   }
