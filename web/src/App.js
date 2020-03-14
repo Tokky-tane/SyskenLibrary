@@ -15,7 +15,10 @@ class App extends React.Component{
     this.state = {
       loading: false,
       books: [],
+      token: '',
     };
+
+    this.handleTokenChange = this.handleTokenChange.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +43,14 @@ class App extends React.Component{
     );
   }
 
+  handleTokenChange(newtoken) {
+//    const tokenst = JSON.stringify(newtoken);
+//    const tokenpa = JSON.parse(tokenst);
+    const tokenstr = JSON.parse(JSON.stringify(newtoken));
+//    console.log(tokenstr.token);
+    this.setState({token: tokenstr.token});
+  }
+
   render_Home = () => {
     return(
       <div className="siteHome">
@@ -51,7 +62,7 @@ class App extends React.Component{
   render_Login = () => {
     return(
       <div className="Loginform">
-        <Login />
+        <Login settoken={this.handleTokenChange}/>
       </div>
     );
   }
