@@ -44,11 +44,7 @@ class App extends React.Component{
   }
 
   handleTokenChange(newtoken) {
-//    const tokenst = JSON.stringify(newtoken);
-//    const tokenpa = JSON.parse(tokenst);
-    const tokenstr = JSON.parse(JSON.stringify(newtoken));
-//    console.log(tokenstr.token);
-    this.setState({token: tokenstr.token});
+    this.setState({token: newtoken.token});
   }
 
   render_Home = () => {
