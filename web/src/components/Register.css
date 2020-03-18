@@ -1,0 +1,30 @@
+form {
+    text-align: center;
+}
+
+input.inputstring {
+    padding: 0.5vh 1.5vh 0.5vh 1.5vh;
+    width: 30%;
+    min-width: 250px;
+    max-width: 450px;
+}
+
+input.inputnumber {
+    padding: 0.5vh 1.5vh 0.5vh 1.5vh;
+    width: 30%;
+    min-width: 250px;
+    max-width: 450px;
+}
+
+div.postbutton {
+    font-size: 1.4em;
+    padding: 5vh 9.5vh;
+    text-align: center;
+}
+    
+
+button {
+    font-weight: bold;
+    background-color: #224488;
+}
+
