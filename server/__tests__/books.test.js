@@ -99,5 +99,11 @@ describe('test to /books', () => {
         .send(book);
     expect(res.statusCode).toBe(401);
   });
+
+  test('delete all books', async () => {
+    const res = await request(app)
+        .delete('/books');
+    expect(res.statusCode).toBe(204);
+  });
 });
 

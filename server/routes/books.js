@@ -1,10 +1,11 @@
 const express = require('express');
-const router = new express.Router();
+const router = require('express-promise-router')();
 const {check} = require('express-validator');
 const models = require('../models');
 const addObjectName = require('../utils/object').addObjectName;
 const auth = require('../middleware/auth');
 const validate = require('../middleware/validation');
+const book = require('../utils/books');
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
@@ -31,6 +32,11 @@ router.post('/', [
     const newBookUrl = req.protocol + '://' + req.get('host') + req.url + `/${newBook.id}`;
     res.location(newBookUrl).status(201).end();
   });
+});
+
+router.delete('/', async (req, res) => {
+  await book.deleteAll();
+  res.status(204).end();
 });
 
 module.exports = router;
