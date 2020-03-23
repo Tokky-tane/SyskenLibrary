@@ -66,14 +66,16 @@ class Register extends React.Component {
     const body = JSON.stringify(newbookdata);
     const headers = {
                       'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + this.props.token,
-                    };
-                    
+                      'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+    var ismovepage = 0               
+                    console.log(headers);
     return fetch('http://localhost:3001/books', {method, headers, body, mode})
                     .then((res) => {
-                      if(res.status === 201){
+                      alert(res.status);
+                      if(res.ok){
+                        ismovepage = 1;
                         alert("本の登録が完了しました!");
-                        window.location.assign('/#/List');
                       }
                       else if(res.status === 401){
                         alert("ログイン有効期限が過ぎています。\nもう一度ログインをやり直してください。")
@@ -81,6 +83,13 @@ class Register extends React.Component {
                       else {
                         alert("本の登録に失敗しました...");
                       }
+
+                      if(ismovepage === 1){
+                        window.location.assign('/#/List');
+                      }
+                    })
+                    .catch((err) => {
+                      alert(err);
                     })
   }
 
@@ -92,5 +101,4 @@ class Register extends React.Component {
       );
   }
 }
-
 export default Register;

@@ -45,6 +45,7 @@ class App extends React.Component{
 
   handleTokenChange(newtoken) {
     this.setState({token: newtoken.token});
+    sessionStorage.setItem('token', newtoken.token);
   }
 
   render_Home = () => {
