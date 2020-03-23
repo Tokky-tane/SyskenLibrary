@@ -1,5 +1,6 @@
 import React from 'react';
 import './Detail.css';
+import Button from '@material-ui/core/Button';
 
 class Detail extends React.Component {
     render() {
@@ -28,8 +29,8 @@ class Detail extends React.Component {
                 </div>
 
                 <div className="controlButtons">
-                    <button className="jumptoBorrow">この本を借りる</button>
-                    <button classNAme="backtoList" onClick={()=>{window.location.href = '/#/List/'}}>一覧に戻る</button>
+                    <Button className="jumptoBorrow">この本を借りる</Button>
+                    <Button classNAme="backtoList" onClick={()=>{window.location.href = '/#/List/'}}>一覧に戻る</Button>
                 </div>
             </>
         );
