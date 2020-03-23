@@ -59,6 +59,13 @@ paths:
       security:
         - bearerAuth: []
       parameters: []
+    delete:
+      summary: delete all books
+      operationId: delete-books
+      responses:
+        '204':
+          description: No Content
+      description: すべての書籍データを削除する
   /users:
     get:
       summary: get all users
