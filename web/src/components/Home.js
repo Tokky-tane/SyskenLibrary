@@ -9,7 +9,6 @@ class Home extends React.Component {
                 <div className="jumpButtons">
                     <button className="jumptoSignup">sign up</button>
                     <button className="jumptoSignin" onClick={()=>{window.location.href = '/#/Login'}}>sign in</button>
-                    <button className="jumptoList" onClick={()=>{window.location.href = '/#/List'}}>junp to List</button>
                 </div>
             </>
         );
