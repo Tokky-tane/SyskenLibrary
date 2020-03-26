@@ -5,12 +5,12 @@ const jwt = require('./jwt');
 module.exports = async (email, password) => {
   const user = await users.findOne({where: {email: email}});
   if (user === null) {
-    throw Error('UserNotFound');
+    return null;
   }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    throw Error('WrongPassword');
+    return null;
   }
 
   return jwt.signToken(user.id);
