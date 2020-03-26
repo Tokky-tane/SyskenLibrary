@@ -1,22 +1,13 @@
 import React from 'react';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-//import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import { makeStyles } from '@material-ui/core';
 import './App.css';
 import Home from './components/Home.js';
 import Login from './components/Signin.js';
 import List from './components/List.js';
 import Register from './components/Register.js';
 import Detail from './components/Detail.js';
-
+import Header from './components/Header.js';
 
 class App extends React.Component{
   constructor(props) {
@@ -97,78 +88,6 @@ class App extends React.Component{
     );
   }
 
-  render_Header = () => {
-    const useStyles = makeStyles(theme => ({
-      root: {
-        flexGrow: 1,
-      },
-      menuButton: {
-        marginRight: theme.spacing(2),
-      },
-      title: {
-        flexGrow: 1,
-      },
-    }));
-    const classes = useStyles();
-    const [auth, setauth] = React.useState(sessionStorage.getItem('token') !== '');
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleMenu = (event) => {
-      setAnchorEl(event.currentTarget);
-    }
-    const handleClose = () => {
-      setAnchorEl(null);
-    }
-    const handleJumpMypage = () => {
-      alert('まだ未実装');
-      setAnchorEl(null);
-    }
-
-    return (
-      <div className={classes.root}>
-        <AppBar position='static'>
-          <Toolbar>
-            <Typography 
-              variant='h6'
-              className={classes.title}
-            >
-              Sysken Library
-            </Typography>
-            {auth && (
-              <div>
-                <IconButton
-                  className={classes.menuButton}
-                  aria-label='account'
-                  aria-haspopup='true'
-                  onClick={handleMenu}
-                  color='inherit'
-                >
-                  <AccountCircle />
-                </IconButton>
-                <Menu
-                  id='menu-appbar'
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleJumpMypage}>マイページ</MenuItem>
-                </Menu>
-              </div>
-            )}
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
-  }
 
   render() {
     if(this.state.loading) {
@@ -176,7 +95,7 @@ class App extends React.Component{
         <MuiThemeProvider>
           <HashRouter>
             <div>
-              <this.render_Header />
+              <Header />
                 <Switch>
                   <Route exact path='/' component={this.render_Home} />
                   <Route path='/Login' component={this.render_Login} />
