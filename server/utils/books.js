@@ -11,7 +11,7 @@ exports.findAll = async () => {
   const books = bookModels.map((bookModel) => {
     const book = bookModel.get({plain: true});
 
-    if (book['Loan'] != null) {
+    if (book['Loan'] == null) {
       book.borrowedBy = null;
       book.borrowedAt = null;
     } else {
