@@ -1,22 +1,18 @@
 const express = require('express');
-const router = new express.Router();
+const router = require('express-promise-router')();
 const {check} = require('express-validator');
 const models = require('../models');
 const addObjectName = require('../utils/object').addObjectName;
 const auth = require('../middleware/auth');
 const validation = require('../middleware/validation');
+const books = require('../utils/books');
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
 
-router.get('/', function(req, res, next) {
-  models.Book.findAll({attributes: ['id', 'title', 'author', 'isbn']})
-      .then((books) => {
-        res.json(addObjectName(books, 'books'));
-      })
-      .catch((err) => {
-        next(err);
-      });
+router.get('/', async (req, res, next) => {
+  const foundBooks = await books.findAll();
+  res.json(addObjectName(foundBooks, 'books'));
 });
 
 router.post('/', [
