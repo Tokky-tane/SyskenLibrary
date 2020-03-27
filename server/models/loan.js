@@ -1,8 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Loan = sequelize.define('Loan', {
-    lentAt: DataTypes.DATE,
-  }, {});
+  const Loan = sequelize.define('Loan', {}, {});
   Loan.associate = function(models) {
     // associations can be defined here
     Loan.belongsTo(models.Book, {
