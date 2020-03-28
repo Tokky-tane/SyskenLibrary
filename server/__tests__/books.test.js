@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
-const dbUtil = require('../utils/database');
+const users = require(`../utils/users`);
 const login = require('../utils/login');
 
 describe('test to /books', () => {
@@ -8,8 +8,8 @@ describe('test to /books', () => {
   const password = 'password';
   let token;
   beforeAll(async () => {
-    await dbUtil.clearUserDatabase();
-    await dbUtil.createUser(email, password);
+    await users.deleteAll();
+    await users.create(email, password);
   });
 
   beforeEach(async () => {
@@ -98,6 +98,12 @@ describe('test to /books', () => {
         .set('Authorization', `Bearer ${wrongToken}`)
         .send(book);
     expect(res.statusCode).toBe(401);
+  });
+
+  test('delete all books', async () => {
+    const res = await request(app)
+        .delete('/books');
+    expect(res.statusCode).toBe(204);
   });
 });
 

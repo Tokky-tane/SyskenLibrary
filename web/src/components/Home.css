@@ -1,0 +1,12 @@
+div.jumpButtons {
+    text-align: center;
+    padding: 3vh;
+}
+
+button.jumptoSignup {
+    margin-right: 25px;
+}
+
+button.jumptoSignin {
+    margin-right: 25px;
+}

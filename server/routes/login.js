@@ -1,37 +1,23 @@
 const express = require('express');
 const router = require('express-promise-router')();
-const bcrypt = require('bcrypt');
-const {check, validationResult} = require('express-validator');
-const user = require('../models').User;
-const jwt = require('../utils/jwt');
+const {check} = require('express-validator');
 const addObjectName = require('../utils/object').addObjectName;
+const validate = require('../middleware/validation');
+const login = require('../utils/login');
 
 router.use(express.json());
 
 router.post('/', [
   check('email').isEmail(),
   check('password').isString().isLength({min: 5, max: 30}),
-], async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors);
-  }
-
+], validate, async (req, res, next) => {
   const receivedUser = req.body;
-  const dbUser = await user.findOne({where: {email: receivedUser.email}});
 
-  if (!dbUser) {
-    res.status(400).end();
-    return;
+  const token = await login(receivedUser.email, receivedUser.password);
+  if (token === null) {
+    return res.status(401).end();
   }
 
-  const match = await bcrypt.compare(receivedUser.password, dbUser.password);
-  if (!match) {
-    res.status(400).end();
-    return;
-  }
-
-  const token = jwt.signToken(dbUser.id);
   res.send(addObjectName(token, 'token'));
 
   return;

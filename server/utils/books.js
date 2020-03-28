@@ -26,3 +26,7 @@ exports.findAll = async () => {
 
   return books;
 };
+
+exports.deleteAll = () => {
+  models.Book.destroy({where: {}});
+};

@@ -12,10 +12,3 @@ td {
     border: 1.5px solid #111;
     font-size: 2.5vw;
 }
-
-div.bookregister {
-    width: max-content;
-    padding-top: 3vh;
-    margin-left: auto;
-    margin-right: auto;
-}
