@@ -1,79 +1,80 @@
 import React from 'react';
 import './Register.css';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class Register extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-          newbooks: {
-              title: '',
-              author: '',
-              isbn: '',
-          },
+        title: '',
+        author: '',
+        isbn: '',
       };
+
       this.submitbookform = this.submitbookform.bind(this);
       this.submitnewbook = this.submitnewbook.bind(this);
       this.postnewbook = this.postnewbook.bind(this);
   }
 
   submitbookform() {
-    return (
+    return ( 
       <div className="newbookform">
-          <form id="newbook">
-            <h3>タイトル</h3>
-            <input className="inputstring" name="title" type="textbox" value={this.state.newbooks.title} onChange={event => this.submitnewbook(event)}></input>
-            <h3>著者</h3>
-            <input className="inputstring" name="author" type="textbox" value={this.state.newbooks.author} onChange={event => this.submitnewbook(event)}></input>
-            <h3>isbnコード</h3>
-            <input className="inputnumber" name="isbn" type="textbox" value={this.state.newbooks.isbn} onChange={event => this.submitnewbook(event)}></input>
-            <br />
-            <div className="postbutton">
-            <button className="postbutton" onClick={() => this.postnewbook()}>登録</button>
-            </div>
+        <h2>登録する本のデータを入力してください</h2>
+        <form id="newbook">
+          <h3>タイトル</h3>
+          <TextField required={true} type='text' value={this.state.title} onChange={(event) => this.submitnewbook('title', event)}/>
+          <h3>著者</h3>
+          <TextField required={true} type='text' value={this.state.author} onChange={(event) => this.submitnewbook('author', event)}/>
+          <h3>isbnコード</h3>
+          <TextField required={false} type='text' value={this.state.isbn} onChange={(event) => this.submitnewbook('isbn', event)}/>
+          <br />
+          <div className="postbutton">
+          <Button className="postbutton" onClick={() => this.submitConfirm()}>登録</Button>
+          </div>
         </form>
       </div>
     );
   }
 
-  submitnewbook(event) {
-    var book = this.state.newbooks;
-
-    switch (event.target.name)
+  submitConfirm() {
+    var ischecked = 1;
+    if(this.state.title === '' || this.state.author === '')
     {
-      case 'title':
-        book.title = event.target.value;
-        break;
-      case 'author':
-        book.author = event.target.value;
-        break;
-      case 'isbn':
-        book.isbn = event.target.value;
-        break;
-      default :
-        break;
+      alert("タイトルまたは著者名は必ず入力する必要があります...");
+      ischecked = 0;
     }
 
-    this.setState({newbooks: book});
+    if(ischecked === 1) {
+      if(window.confirm("このデータで登録します。よろしいですか?\ntitle : "+this.state.title+"\nauthor: "+this.state.author+"\nisbn  : "+this.state.isbn)) {
+        this.postnewbook();
+      }
+    }
+  }
+
+  submitnewbook(name, event) {
+    var changestate = event.target.value;
+    this.setState({[name]: changestate});
   }
     
   postnewbook() {
-    const newbookdata = { title: (this.state.newbooks.title),
-                          author: (this.state.newbooks.author),
-                          isbn: (this.state.newbooks.isbn) || null ,
+    const newbookdata = { title: (this.state.title),
+                          author: (this.state.author),
+                          isbn: (this.state.isbn) || null ,
                         };
     const method = "POST";
     const mode = "cors";
     const body = JSON.stringify(newbookdata);
     const headers = {
                       'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + this.props.token,
-                    };
-                    
+                      'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+    var ismovepage = 0               
     return fetch('http://localhost:3001/books', {method, headers, body, mode})
                     .then((res) => {
-                      if(res.status === 201){
+                      if(res.ok){
+                        ismovepage = 1;
                         alert("本の登録が完了しました!");
-                        window.location.assign('/#/List');
                       }
                       else if(res.status === 401){
                         alert("ログイン有効期限が過ぎています。\nもう一度ログインをやり直してください。")
@@ -81,6 +82,13 @@ class Register extends React.Component {
                       else {
                         alert("本の登録に失敗しました...");
                       }
+
+                      if(ismovepage === 1){
+                        window.location.assign('/#/List');
+                      }
+                    })
+                    .catch((err) => {
+                      alert(err);
                     })
   }
 
@@ -92,5 +100,4 @@ class Register extends React.Component {
       );
   }
 }
-
 export default Register;

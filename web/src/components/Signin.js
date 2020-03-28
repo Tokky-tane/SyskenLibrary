@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class Signin extends React.Component {
     ismounted = false;
@@ -6,10 +8,8 @@ class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            login: {
-                email: '',
-                pass: '',
-            },
+            email: '',
+            pass: '',
             token: '',
         };
         this.render_loginform = this.render_loginform.bind(this);
@@ -25,38 +25,36 @@ class Signin extends React.Component {
                 </div>
                 <div className="Loginform">
                     <h3>メールアドレス</h3>
-                    <input className="inEmailad" type="textarea" placeholder="メールアドレスを入力" name="email" value={this.state.login.email} onChange={event => this.set_logininfo(event)}></input>
+                    <TextField 
+                        required={true} 
+                        type='text' 
+                        value={this.state.email} 
+                        onChange={(event) => this.set_logininfo('email', event)}
+                    />
                     <h3>パスワード</h3>
-                    <input className="inPass" type="password" placeholder="パスワードを入力" name="password" value={this.state.login.pass} onChange={event => this.set_logininfo(event)}></input>
+                    <TextField 
+                        required={true} 
+                        type='password' 
+                        value={this.state.pass} 
+                        onChange={(event) => this.set_logininfo('pass', event)}
+                    />
                     <div className="loginbutton">
-                        <button className="loginbutton" onClick={() => this.logincheck()}>GO</button>
+                        <Button className="loginbutton" onClick={() => this.logincheck()}>GO</Button>
                     </div>
                 </div>
             </>
         );
     }
 
-    set_logininfo(event) {
-        var logininfo = this.state.login;
-
-        switch (event.target.name) {
-            case 'email':
-                logininfo.email = event.target.value;
-                break;
-            case 'password': 
-                logininfo.pass = event.target.value;
-                break;
-            default:
-                break;
-        }
-
-        this.setState({login: logininfo});
+    set_logininfo(name, event) {
+        var logininfo = event.target.value;
+        this.setState({[name]: logininfo});
     }
 
     logincheck() {
         const logindata = { 
-                            email: (this.state.login.email),
-                            password: (this.state.login.pass)
+                            email: (this.state.email),
+                            password: (this.state.pass)
                           };
         const method = "POST";
         const mode = "cors";
@@ -67,7 +65,7 @@ class Signin extends React.Component {
                         
         return fetch('http://localhost:3001/login', {method, headers, body, mode})
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.ok) {
                         response.json().then((data) => {
                             this.setState({token: data});
                             this.ismounted = true;

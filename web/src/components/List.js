@@ -1,5 +1,6 @@
 import React from 'react';
 import './List.css';
+import Button from '@material-ui/core/Button';
 
 class List extends React.Component {
     render() {
@@ -34,7 +35,7 @@ class List extends React.Component {
                     </tbody>
                 </table>
                 <div className="regibutton">
-                    <button className="registarbutton" onClick={()=>{window.location.href = '/#/submit'}}>新しい本を登録</button>
+                    <Button className="registarbutton" onClick={()=>{window.location.href = '/#/submit'}}>新しい本を登録</Button>
                 </div>
             </div>
         );
