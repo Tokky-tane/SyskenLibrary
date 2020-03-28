@@ -21,7 +21,7 @@ paths:
                   books:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Book-with-id'
+                      $ref: '#/components/schemas/BookWithLoan'
               examples:
                 example-1:
                   value:
@@ -29,9 +29,13 @@ paths:
                       - title: sample_book
                         author: sample_author
                         isbn: null
+                        borrowedBy: 1
+                        borrowedAt: '020-03-27T02:57:06.105Z'
                       - title: sample_book2
                         author: sample_author
                         isbn: '9783161484100'
+                        borrowedBy: null
+                        borrowedAt: null
       operationId: get-books
       description: すべての書籍のデータを返す
       summary: get all books
@@ -160,25 +164,33 @@ components:
     Book:
       title: Book
       type: object
+      x-examples:
+        example-1:
+          title: sample_book
+          author: sample_author
+          isbn: 9783161484100
+        example-2:
+          title: sample_book
+          author: sample_author
+          isbn: null
+        example-3:
+          title: sample_book
+          author: null
+          isbn: null
       properties:
         title:
           type: string
         author:
-          type: string
+          type:
+            - string
+            - 'null'
         isbn:
-          type: integer
+          type:
+            - integer
+            - 'null'
+          multipleOf: 0
       required:
         - title
-    Book-with-id:
-      title: Book-with-id
-      allOf:
-        - type: object
-          properties:
-            id:
-              type: integer
-          required:
-            - id
-        - $ref: '#/components/schemas/Book'
     User:
       title: User
       type: object
@@ -192,6 +204,41 @@ components:
       required:
         - email
         - password
+    BookWithLoan:
+      title: ''
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              description: 本のId
+        - $ref: '#/components/schemas/Book'
+        - type: object
+          properties:
+            borrowedBy:
+              type:
+                - number
+                - 'null'
+              description: 本を借りた人のId
+            borrowedAt:
+              type:
+                - string
+                - 'null'
+              description: 本が借りられた日付
+      description: ''
+      x-examples:
+        example-1:
+          title: sample_book
+          author: sample_author
+          isbn: null
+          borrowedBy: 1
+          borrowedAt: '020-03-27T02:57:06.105Z'
+        example-2:
+          title: sample_book2
+          author: sample_author
+          isbn: '9783161484100'
+          borrowedBy: null
+          borrowedAt: null
   securitySchemes:
     bearerAuth:
       type: http

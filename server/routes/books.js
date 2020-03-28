@@ -4,17 +4,15 @@ const {check} = require('express-validator');
 const models = require('../models');
 const addObjectName = require('../utils/object').addObjectName;
 const auth = require('../middleware/auth');
+const books = require('../utils/books');
 const validate = require('../middleware/validation');
-const book = require('../utils/books');
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
 
-router.get('/', function(req, res, next) {
-  models.Book.findAll({attributes: ['id', 'title', 'author', 'isbn']})
-      .then((books) => {
-        res.json(addObjectName(books, 'books'));
-      });
+router.get('/', async (req, res, next) => {
+  const foundBooks = await books.findAll();
+  res.json(addObjectName(foundBooks, 'books'));
 });
 
 router.post('/', [
@@ -35,7 +33,7 @@ router.post('/', [
 });
 
 router.delete('/', async (req, res) => {
-  await book.deleteAll();
+  await books.deleteAll();
   res.status(204).end();
 });
 

@@ -8,7 +8,7 @@ describe('test to /books', () => {
   const password = 'password';
   let token;
   beforeAll(async () => {
-    users.deleteAll();
+    await users.deleteAll();
     await users.create(email, password);
   });
 

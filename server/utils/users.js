@@ -1,8 +1,9 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 
-exports.deleteAll = () => {
-  models.User.destroy({where: {}, truncate: true});
+
+exports.deleteAll = async () => {
+  await models.User.destroy({where: {}});
 };
 
 exports.create = async (email, password) => {
