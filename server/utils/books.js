@@ -15,7 +15,7 @@ exports.findAll = async () => {
       book.borrowedBy = null;
       book.borrowedAt = null;
     } else {
-      book.borrowedBy = book.Loan.bookId;
+      book.borrowedBy = book.Loan.userId;
       book.borrowedAt = book.Loan.createdAt;
     }
 
