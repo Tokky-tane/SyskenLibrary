@@ -4,6 +4,7 @@ const {check} = require('express-validator');
 const user = require('../models').User;
 const validate = require('../middleware/validation');
 const users = require('../utils/users');
+const auth = require('../middleware/auth');
 
 router.use(express.json());
 router.use(express.urlencoded({extended: true}));
@@ -36,6 +37,21 @@ router.post('/', [
 router.delete('/', async (req, res) => {
   users.deleteAll();
   return res.status(204).end();
+});
+
+router.get('/:userId', auth, async (req, res) => {
+  if (req.params.userId != 'me' &&
+    req.params.userId != req.body.userId) {
+    return res.status(403).send({
+      error: {
+        message: '他の人のデータを見ることはできません',
+      },
+    });
+  }
+  const userId = req.body.userId;
+  const foundUser = users.findById(userId);
+
+  res.send(foundUser);
 });
 
 module.exports = router;

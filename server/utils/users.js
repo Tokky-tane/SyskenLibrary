@@ -1,6 +1,22 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 
+exports.findById = async () => {
+  const foundUser = (await user.findOne({
+    where: {id: userId},
+    attributes: ['id', 'email'],
+    include: [{
+      model: models.Loan,
+      attributes: ['id', 'bookId', 'createdAt'],
+    }],
+  })).toJSON();
+
+  // rename Loans -> loans
+  foundUser['loans'] = foundUser['Loans'];
+  delete foundUser['Loans'];
+
+  return foundUser;
+};
 
 exports.deleteAll = async () => {
   await models.User.destroy({where: {}});
