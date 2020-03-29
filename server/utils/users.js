@@ -1,8 +1,8 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 
-exports.findById = async () => {
-  const foundUser = (await user.findOne({
+exports.findById = async (userId) => {
+  const foundUser = (await models.User.findOne({
     where: {id: userId},
     attributes: ['id', 'email'],
     include: [{

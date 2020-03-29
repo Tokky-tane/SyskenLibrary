@@ -51,7 +51,7 @@ router.get('/:userId', auth, async (req, res) => {
     });
   }
   const userId = req.body.userId;
-  const foundUser = users.findById(userId);
+  const foundUser = await users.findById(userId);
 
   res.send(foundUser);
 });
