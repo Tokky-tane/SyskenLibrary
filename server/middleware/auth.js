@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
   try {
     const id = jwt.verifyToken(token)['sub'];
-    req.body.user_id = id;
+    req.body.userId = id;
   } catch (error) {
     return res.status(401).end();
   }
