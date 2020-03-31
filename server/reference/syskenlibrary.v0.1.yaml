@@ -30,7 +30,7 @@ paths:
                         author: sample_author
                         isbn: null
                         borrowedBy: 1
-                        borrowedAt: '020-03-27T02:57:06.105Z'
+                        borrowedAt: '2020-03-27T02:57:06.105Z'
                       - title: sample_book2
                         author: sample_author
                         isbn: '9783161484100'
@@ -159,6 +159,133 @@ paths:
                 value:
                   email: foo@bar.com
                   password: password
+  '/users/{id}':
+    parameters:
+      - schema:
+          type: string
+          pattern: '(me|[0-9]+)'
+        name: id
+        in: path
+        required: true
+        description: ''
+    get:
+      summary: get user data
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ユーザーのId
+                  email:
+                    type: string
+                    description: ユーザーのメールアドレス
+                  loans:
+                    type: array
+                    description: 貸出情報のリスト
+                    items:
+                      type: object
+                      description: 貸出情報を表すオブジェクト
+                      properties:
+                        id:
+                          type: integer
+                          description: 貸出Id
+                        bookId:
+                          type: integer
+                          description: 借りている本のId
+                        createdAt:
+                          type: string
+                          description: 本を借りた日を表す文字列
+              examples:
+                example-1:
+                  value:
+                    id: 1
+                    email: foo@bar.com
+                    loans:
+                      - id: 1
+                        bookId: 20
+                        createdAt: '2020-03-31T10:52:49.939Z'
+                      - id: 2
+                        bookId: 21
+                        createdAt: '2020-03-31T10:54:10.391Z'
+                example-2:
+                  value:
+                    id: 1
+                    email: foo@bar.com
+                    loans: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      operationId: get-users-id
+      description: ユーザーのデータを取得する
+      security:
+        - bearerAuth: []
+  '/users/{id}/loans':
+    parameters:
+      - schema:
+          type: string
+          pattern: '(me|[0-9]+)'
+        name: id
+        in: path
+        required: true
+        description: ''
+    post:
+      summary: borrow a book
+      operationId: post-users-id-loans
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: 作成された貸出情報を示すURL
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      description: 本のIdを指定して本を借りる
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bookId:
+                  type: integer
+                  description: 借りたい本のId
+              required:
+                - bookId
+            examples:
+              example-1:
+                value:
+                  bookId: 1
+        description: 本の借りるための情報
+      security:
+        - bearerAuth: []
 components:
   schemas:
     Book:
@@ -180,15 +307,17 @@ components:
       properties:
         title:
           type: string
+          description: 本のタイトル
         author:
-          type:
-            - string
-            - 'null'
+          oneOf:
+            - type: string
+            - type: 'null'
+          description: 本の著者
         isbn:
-          type:
-            - integer
-            - 'null'
-          multipleOf: 0
+          oneOf:
+            - type: integer
+            - type: 'null'
+          description: 本のISBN
       required:
         - title
     User:
@@ -239,6 +368,17 @@ components:
           isbn: '9783161484100'
           borrowedBy: null
           borrowedAt: null
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      properties:
+        error:
+          type: object
+          description: 発生したエラー
+          properties:
+            message:
+              type: string
+              description: エラーの詳細
   securitySchemes:
     bearerAuth:
       type: http
