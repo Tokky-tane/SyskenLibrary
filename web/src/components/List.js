@@ -3,11 +3,31 @@ import './List.css';
 import Button from '@material-ui/core/Button';
 
 class List extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          books: [],
+        };
+    }
+
+    componentDidMount() {
+        return fetch('http://localhost:3001/books')
+          .then((res) => res.json())
+          .then((resJson) => {
+            this.setState({
+              books: resJson.books,
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    } 
+
     render() {
-        const listtable = this.props.books.map((books) =>
-                <tr key={books.title}>
+        const listtable = this.state.books.map((books) =>
+                <tr key={books.title} className="listTable">
                     <td>
-                        <a href={"/#/detail?bt=" + books.title}>
+                        <a className="bookDetail" href={"/#/detail?bt=" + books.title}>
                             {books.title}
                         </a>
                     </td>

@@ -39,9 +39,9 @@ class Register extends React.Component {
 
   submitConfirm() {
     var ischecked = 1;
-    if(this.state.title === '' || this.state.author === '')
+    if(this.state.title === '')
     {
-      alert("タイトルまたは著者名は必ず入力する必要があります...");
+      alert("タイトルは必ず入力する必要があります...");
       ischecked = 0;
     }
 

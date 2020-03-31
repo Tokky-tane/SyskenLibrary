@@ -8,8 +8,13 @@ class Home extends React.Component {
             <>
                 <h1>Welcome to "Sysken Library" !!</h1>
                 <div className="jumpButtons">
-                    <Button className="jumptoSignup" onClick={()=>{alert("実装までもう少し待ってね")}}>sign up</Button>
-                    <Button className="jumptoSignin" onClick={()=>{window.location.href = '/#/Login'}}>sign in</Button>
+                    <div className="login">
+                        <Button className="jumptoSignup" onClick={()=>{alert("実装までもう少し待ってね")}}>sign up</Button>
+                        <Button className="jumptoSignin" onClick={()=>{window.location.href = '/#/Login'}}>sign in</Button>
+                    </div>
+                    <div className="notlogin">
+                        <Button className="junptoList" onClick={()=>{window.location.href = '/#/List'}}>List</Button>
+                    </div>
                 </div>
             </>
         );
