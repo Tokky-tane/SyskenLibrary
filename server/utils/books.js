@@ -50,3 +50,11 @@ exports.findById = async (id) => {
 exports.deleteAll = () => {
   models.Book.destroy({where: {}});
 };
+
+exports.create = (title, author, isbn) => {
+  return models.Book.create({
+    title: title,
+    author: author,
+    isbn: isbn,
+  });
+};
