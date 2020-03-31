@@ -3,6 +3,26 @@ import './Detail.css';
 import Button from '@material-ui/core/Button';
 
 class Detail extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          books: [],
+        };
+    }
+
+    componentDidMount() {
+        return fetch('http://localhost:3001/books')
+          .then((res) => res.json())
+          .then((resJson) => {
+            this.setState({
+              books: resJson.books,
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } 
+
     render() {
         let urlParam = window.location.hash;
         let detailBt = '';
@@ -13,7 +33,7 @@ class Detail extends React.Component {
             detailBt = urlParam.split('=');
         }
 
-        const detailbookstate = this.props.books.filter(function (item) {
+        const detailbookstate = this.state.books.filter(function (item) {
             if (item.title === detailBt[1]) {
                 return true;
             }

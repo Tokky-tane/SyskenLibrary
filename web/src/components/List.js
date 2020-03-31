@@ -8,7 +8,7 @@ class List extends React.Component {
         this.state = {
           books: [],
         };
-      }
+    }
 
     componentDidMount() {
         return fetch('http://localhost:3001/books')
