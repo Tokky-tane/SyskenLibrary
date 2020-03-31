@@ -14,7 +14,6 @@ class App extends React.Component{
     super(props);
     this.state = {
       loading: false,
-      books: [],
       token: '',
     };
 
@@ -23,11 +22,9 @@ class App extends React.Component{
 
   componentDidMount() {
     return fetch('http://localhost:3001/books')
-      .then((res) => res.json())
-      .then((resJson) => {
+      .then(() => {
         this.setState({
           loading: true,
-          books: resJson.books,
         });
       })
       .catch((error) => {
@@ -75,7 +72,7 @@ class App extends React.Component{
   render_Submit = () => {
     return (
       <div className="booksubmit">
-        <Register token={this.state.token}/>
+        <Register />
       </div>
     );
   }
@@ -83,7 +80,7 @@ class App extends React.Component{
   render_Detail = () => {
     return (
       <div className="bookdetail">
-        <Detail books={this.state.books}/>
+        <Detail />
       </div>
     );
   }
