@@ -67,7 +67,7 @@ class App extends React.Component{
   render_List = () => {
     return (
       <div className="bookList">
-        <List books={this.state.books} />
+        <List />
       </div>
     );
   }
