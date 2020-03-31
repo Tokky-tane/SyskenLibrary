@@ -1,7 +1,6 @@
 const express = require('express');
 const router = require('express-promise-router')();
 const {check} = require('express-validator');
-const models = require('../models');
 const addObjectName = require('../utils/object').addObjectName;
 const auth = require('../middleware/auth');
 const books = require('../utils/books');
@@ -19,13 +18,9 @@ router.post('/', [
   check('title').exists({checkNull: true}),
   check('isbn').optional({nullable: true}).isISBN(),
 ], validate, auth, (req, res, next) => {
-  const newBook = req.body;
+  const book = req.body;
 
-  models.Book.create({
-    title: newBook.title,
-    author: newBook.author,
-    isbn: newBook.isbn,
-  }).then((newBook) => {
+  books.create(book.title, book.author, book.isbn).then((newBook) => {
     // 新しく生成された本を指すURLをLocationヘッダに設定する
     const newBookUrl = req.protocol + '://' + req.get('host') + req.url + `/${newBook.id}`;
     res.location(newBookUrl).status(201).end();
