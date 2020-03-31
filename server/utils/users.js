@@ -15,6 +15,10 @@ exports.findById = async (userId) => {
   foundUser['loans'] = foundUser['Loans'];
   delete foundUser['Loans'];
 
+  if (foundUser.loans == null) {
+    foundUser.loans = [];
+  }
+
   return foundUser;
 };
 
