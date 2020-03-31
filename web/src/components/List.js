@@ -5,9 +5,9 @@ import Button from '@material-ui/core/Button';
 class List extends React.Component {
     render() {
         const listtable = this.props.books.map((books) =>
-                <tr key={books.title}>
+                <tr key={books.title} className="listTable">
                     <td>
-                        <a href={"/#/detail?bt=" + books.title}>
+                        <a className="bookDetail" href={"/#/detail?bt=" + books.title}>
                             {books.title}
                         </a>
                     </td>
