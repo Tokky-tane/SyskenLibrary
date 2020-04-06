@@ -41,15 +41,20 @@ router.delete('/', async (req, res) => {
   return res.status(204).end();
 });
 
-router.get('/:userId', auth, async (req, res) => {
+const checkUserId = (req, res, next) => {
   if (req.params.userId != 'me' &&
     req.params.userId != req.body.userId) {
     return res.status(403).send({
       error: {
-        message: '他の人のデータを見ることはできません',
+        message: '他の人のアカウントで操作することはできません',
       },
     });
+  } else {
+    next();
   }
+};
+
+router.get('/:userId', auth, checkUserId, async (req, res) => {
   const userId = req.body.userId;
   const foundUser = await users.findById(userId);
 
@@ -58,16 +63,7 @@ router.get('/:userId', auth, async (req, res) => {
 
 router.post('/:userId/loans', [
   check('bookId').isInt(),
-], validate, auth, async (req, res) => {
-  if (req.params.userId != 'me' &&
-    req.params.userId != req.body.userId) {
-    return res.status(403).send({
-      error: {
-        message: '他の人のアカウントで本を借りることはできません',
-      },
-    });
-  }
-
+], validate, auth, checkUserId, async (req, res) => {
   const bookId = req.body.bookId;
   const userId = req.body.userId;
   const book = await books.findById(bookId);
