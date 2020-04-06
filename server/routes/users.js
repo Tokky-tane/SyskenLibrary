@@ -91,4 +91,17 @@ router.post('/:userId/loans', [
       .end();
 });
 
+router.delete('/:userId/loans/:loanId', auth, checkUserId, async (req, res) => {
+  const deleted = await loans.deleteById(req.params.loanId);
+  if (deleted) {
+    return res.status(204).end();
+  } else {
+    return res.status(404).send({
+      error: {
+        message: '指定された貸出情報は存在しません',
+      },
+    });
+  }
+});
+
 module.exports = router;
