@@ -167,7 +167,7 @@ paths:
         name: id
         in: path
         required: true
-        description: ''
+        description: ユーザーのId、meを利用して自分を表すこともできる
     get:
       summary: get user data
       tags: []
@@ -220,17 +220,17 @@ paths:
                     loans: []
         '401':
           description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples: {}
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example-1:
+                  value:
+                    error:
+                      message: 他の人のアカウントで操作することはできません
       operationId: get-users-id
       description: ユーザーのデータを取得する
       security:
@@ -243,7 +243,7 @@ paths:
         name: id
         in: path
         required: true
-        description: ''
+        description: ユーザーのId、meを利用して自分を表すこともできる
     post:
       summary: borrow a book
       operationId: post-users-id-loans
@@ -261,12 +261,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example-1:
+                  value:
+                    error:
+                      message: 指定された本は存在しません
+        '401':
+          description: Unauthorized
         '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example-1:
+                  value:
+                    error:
+                      message: 他の人のアカウントで操作することはできません
       description: 本のIdを指定して本を借りる
       requestBody:
         content:
@@ -284,6 +296,55 @@ paths:
                 value:
                   bookId: 1
         description: 本の借りるための情報
+      security:
+        - bearerAuth: []
+  '/users/{userId}/loans/{loanId}':
+    parameters:
+      - schema:
+          type: string
+          pattern: '(me|[0-9]+)'
+        name: userId
+        in: path
+        required: true
+        description: ユーザーのId、meを利用して自分を表すこともできる
+      - schema:
+          type: number
+        name: loanId
+        in: path
+        required: true
+        description: 貸出情報のId
+    delete:
+      summary: return book
+      operationId: delete-users-userId-loans-loanId
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example-1:
+                  value:
+                    error:
+                      message: 他の人のアカウントで操作することはできません
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example-1:
+                  value:
+                    error:
+                      message: 指定された貸出情報は存在しません
+      description: 貸出Idを指定して本を返却する
+      parameters: []
       security:
         - bearerAuth: []
 components:

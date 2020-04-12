@@ -172,5 +172,37 @@ describe('test to /users', () => {
 
     expect(res.statusCode).toBe(400);
   });
+
+  test('return book', async () => {
+    const book = await books.create('sample');
+    const email = 'foo@bar.com';
+    const password = 'password';
+    const user = await users.create(email, password);
+    const token = await login(email, password);
+
+    const loan = await loans.create(book.id, user.id);
+
+    const res = await request(app)
+        .delete(`/users/${user.id}/loans/${loan.id}`)
+        .set('Authorization', `Bearer ${token}`);
+
+    expect(res.statusCode).toBe(204);
+  });
+
+  test('return not existing book', async () => {
+    const book = await books.create('sample');
+    const email = 'foo@bar.com';
+    const password = 'password';
+    const user = await users.create(email, password);
+    const token = await login(email, password);
+
+    const loan = await loans.create(book.id, user.id);
+
+    const res = await request(app)
+        .delete(`/users/${user.id}/loans/${loan.id + 1}`)
+        .set('Authorization', `Bearer ${token}`);
+
+    expect(res.statusCode).toBe(404);
+  });
 });
 
